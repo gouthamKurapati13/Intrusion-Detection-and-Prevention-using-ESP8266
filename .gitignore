@@ -1,0 +1,132 @@
+# Virtual Environment
+idps_env/
+venv/
+env/
+ENV/
+.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# IPython
+profile_default/
+ipython_config.py
+
+# pyenv
+.python-version
+
+# IDPS Specific Files
+# Log files
+data/logs/*.log
+data/logs/*.csv
+*.log
+
+# Audit logs
+data/audit_logs/*.json
+
+# Model files (optional - uncomment if you don't want to track trained models)
+# data/models/*.pkl
+# data/models/*.joblib
+
+# Blocked IPs file (contains sensitive data)
+data/blocked_ips.txt
+
+# Backup directory
+old_structure_backup/
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Configuration files with sensitive data (if any)
+config/local_settings.py
+config/production_settings.py
+.env
+.env.local
+.env.production
+
+# Database files (if added later)
+*.db
+*.sqlite
+*.sqlite3
+
+# Streamlit cache
+.streamlit/
+
+# ML model artifacts (temporary files)
+*.pkl.tmp
+*.model.tmp
+
+# Process IDs
+*.pid
+
+# Coverage reports
+.coverage
+htmlcov/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
