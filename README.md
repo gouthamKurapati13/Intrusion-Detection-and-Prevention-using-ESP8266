@@ -1,15 +1,20 @@
 # Intrusion Detection and Prevention System (IDPS)
 
-A comprehensive Python-based Intrusion Detection and Prevention System that monitors login attempts, detects suspicious activities using machine learning, and automatically blocks malicious IPs.
+A comprehensive Python-based Intrusion Det## 🚀 Running the System
+
+### Super Simple Setup & Startion and Prevention System that monitors login attempts, detects suspicious activities using machine learning, and automatically blocks malicious IPs. Features a modern dark-themed dashboard and intuitive attack simulation interface.
 
 ## 🚀 Features
 
-- **Real-time Monitoring**: Continuously monitors login attempts and network activity
+- **Real-time Monitoring**: Continuously monitors login attempts and network activity with live dashboard
 - **Machine Learning Detection**: Uses Random Forest classifier to identify suspicious patterns
 - **Automatic IP Blocking**: Automatically blocks IPs identified as threats
-- **Web Dashboard**: Real-time dashboard to monitor system status and manage blocked IPs
+- **Modern Web Dashboard**: Real-time dark-themed dashboard with enhanced UI for monitoring system status
+- **Interactive Attack Simulator**: User-friendly interface for testing various attack scenarios
+- **Hardware Attack Simulator**: ESP8266-based physical device for real-world attack testing
+- **Monitor Control**: Toggle monitoring on/off directly from the dashboard sidebar
 - **Audit Logging**: Comprehensive logging and audit trail for security analysis
-- **Attack Simulation**: Built-in tools for testing system effectiveness
+- **Attack Simulation**: Built-in software tools and hardware device for comprehensive testing
 
 ## 📁 Project Structure
 
@@ -33,21 +38,25 @@ idps/
 │   │   └── ids_monitor.py   # Main monitoring service
 │   ├── dashboard/
 │   │   ├── __init__.py
-│   │   └── dashboard.py     # Streamlit dashboard
+│   │   └── dashboard.py     # Enhanced Streamlit dashboard with dark theme
 │   └── tools/
 │       ├── __init__.py
 │       ├── train_model.py   # Model training utility
-│       └── attack_sim.py    # Attack simulation tool
+│       ├── attack_sim.py    # Command-line attack simulation tool
+│       ├── attack_simulator_ui.py  # Interactive attack simulator UI
+│       └── attack_scenarios.py     # Pre-configured attack scenarios
 ├── data/
 │   ├── logs/
 │   ├── audit_logs/
 │   ├── models/
 │   └── blocked_ips.txt
+├── hardware/
+│   ├── esp8266_attacker.ino    # ESP8266 hardware attacker code
+│   ├── circuit_diagram.md      # Circuit schematic and connections
+│   └── README.md               # Hardware setup guide
 ├── requirements.txt
 ├── setup.py
-├── run_server.py           # Server startup script
-├── run_monitor.py          # Monitor startup script
-├── run_dashboard.py        # Dashboard startup script
+├── setup.py                # Complete system setup and startup
 └── README.md
 ```
 
@@ -91,74 +100,66 @@ idps/
 
 ### Quick Start (Recommended)
 
-**Option A: Start All Components at Once**
+**One Command Does Everything:**
 ```bash
 # Make sure virtual environment is activated
 source idps_env/bin/activate  # Linux/Mac
 # idps_env\Scripts\activate   # Windows
 
-# Start all components with one command
-python idps_control.py start
+# Setup and start everything (will ask if you want to start services)
+python setup.py
 ```
 
-**Option B: Interactive Control Mode**
-```bash
-# Make sure virtual environment is activated
-source idps_env/bin/activate
+That's it! The setup script will:
+1. ✅ Initialize the system (create directories, train ML model)
+2. ✅ Ask if you want to start all services
+3. ✅ Start all services automatically if you choose 'yes'
+4. ✅ Display all access URLs
 
-# Launch interactive control
-python idps_control.py
+**What gets started:**
+- 🌐 **Flask Web Server** (port 5000) - Login form for testing
+- 🛡️ **IDS Monitor** - Real-time intrusion detection 
+- 📊 **Streamlit Dashboard** (port 8501) - Management interface
+- 🧪 **Attack Simulator UI** (port 8502) - Interactive testing tool
 
-# Available commands in interactive mode:
-# start   - Start all components
-# stop    - Stop all components
-# status  - Show component status
-# restart - Restart all components
-# quit    - Exit interactive mode
-```
+### Stopping the System
 
-### Manual Start (Advanced Users)
-
-If you prefer to start each component separately in different terminals:
-
-**Terminal 1: Web Server**
-```bash
-source idps_env/bin/activate
-python run_server.py
-```
-
-**Terminal 2: IDS Monitor**
-```bash
-source idps_env/bin/activate
-python run_monitor.py
-```
-
-**Terminal 3: Dashboard**
-```bash
-source idps_env/bin/activate
-python run_dashboard.py
-```
-
-### Control Commands
-
-```bash
-# Direct control commands (with virtual environment activated)
-python idps_control.py start      # Start all components
-python idps_control.py stop       # Stop all components
-python idps_control.py status     # Show status of all components
-python idps_control.py restart    # Restart all components
-python idps_control.py            # Interactive mode (default)
-```
+To stop all services, simply press `Ctrl+C` in the terminal where you ran `python setup.py`.
 
 ### Accessing the System
 
-Once the system is running, you can access:
-- **Web Server**: http://localhost:5000 (Login form for testing attacks)
-- **Dashboard**: http://localhost:8501 (Real-time monitoring and management)
+Once all services are running (after running `python setup.py` and choosing 'yes'), you can access:
+- **🌐 Web Server**: http://localhost:5000 (Login form for testing attacks)
+- **📊 IDPS Dashboard**: http://localhost:8501 (Real-time monitoring and management with dark theme)
+- **🧪 Attack Simulator**: http://localhost:8502 (Interactive testing interface)
 
 ### Testing the System
 
-**Basic Attack Simulation**
+**Method 1: Interactive Attack Simulator UI (Software)**
+
+The Attack Simulator UI is automatically started when you run `python setup.py`. Simply open your browser and go to:
+- **🧪 Attack Simulator**: http://localhost:8502
+
+The UI provides:
+- Pre-configured attack scenarios with detailed descriptions
+- Easy-to-use interface for testing different attack types
+- Real-time feedback and results
+- Options for gentle testing, volumetric attacks, and stealth approaches
+
+**Method 2: Hardware Attack Simulator (ESP8266)**
+
+For real-world testing with physical hardware:
+1. Set up the ESP8266 hardware attacker (see `hardware/README.md`)
+2. Configure WiFi and server settings in the Arduino code
+3. Upload the code to ESP8266
+4. Watch LED indicators for real-time attack status:
+   - **Blue LED**: Attack blocked by IDPS
+   - **White LED**: Attack successful
+   - **Both LEDs**: Communication error
+
+**Method 3: Command Line Testing**
+
+**Command-Line Attack Simulation**
 ```bash
 # Make sure virtual environment is activated
 source idps_env/bin/activate
@@ -167,7 +168,7 @@ source idps_env/bin/activate
 python -m src.tools.attack_sim
 ```
 
-**Advanced Attack Simulations**
+**Advanced Command-Line Simulations**
 ```bash
 # Brute force attack with custom parameters
 python -m src.tools.attack_sim --type brute_force --attempts 30 --delay 1
@@ -195,14 +196,7 @@ python -m src.tools.train_model
 
 ### Stopping the System
 
-**Using Control Script**
-```bash
-python idps_control.py stop
-```
-
-**Manual Stop**
-- Use `Ctrl+C` in each terminal running the components
-- Or use the interactive control mode to stop all components
+Simply press `Ctrl+C` in the terminal where you ran `python setup.py`. This will gracefully stop all services.
 
 ## 🔧 Configuration
 
@@ -215,12 +209,68 @@ Edit `config/settings.py` to customize:
 
 ## 📊 Dashboard Features
 
-The web dashboard provides:
-- **Real-time Login Attempts**: View recent login attempts
-- **Blocked IPs Management**: View and manage blocked IP addresses
-- **Audit Logs**: Detailed logs for each IP address
-- **System Statistics**: Overview of system performance
-- **Manual Controls**: Unblock IPs and clear logs
+The enhanced web dashboard provides:
+- **Modern Dark Theme**: Professional dark-themed interface with improved readability
+- **Real-time Login Attempts**: View recent login attempts with styled tables
+- **Monitor Control**: Toggle the monitoring system on/off directly from the sidebar
+- **Blocked IPs Management**: View and manage blocked IP addresses with enhanced UI
+- **Audit Logs**: Detailed logs for each IP address with better formatting
+- **System Statistics**: Overview of system performance with real-time updates
+- **Manual Controls**: Unblock IPs and clear logs with intuitive interface
+- **Auto-refresh**: Optional automatic refresh for real-time monitoring
+
+## 🎯 Attack Simulator Features
+
+### Software Attack Simulator
+The interactive web-based attack simulator includes:
+- **Pre-configured Scenarios**: Multiple attack types with detailed descriptions
+- **Gentle Testing**: Baseline measurements for system calibration
+- **Volumetric Testing**: High-volume attack simulations
+- **Stealth Testing**: Low and slow attack patterns
+- **Real-time Feedback**: Immediate results and system response
+- **User-friendly Interface**: Clean, intuitive design for easy testing
+
+### Hardware Attack Simulator (ESP8266)
+The physical hardware attacker provides:
+- **Real-world Testing**: Physical device simulating actual attacker behavior
+- **Visual Feedback**: LED indicators for attack status (blocked/success/error)
+- **Autonomous Operation**: Continuous attack simulation without computer dependency
+- **Network Integration**: WiFi-enabled for realistic network-based attacks
+- **Serial Monitoring**: Detailed attack logs via USB serial connection
+- **Configurable Attacks**: Customizable username/password combinations
+- **Low Cost**: Affordable ESP8266 microcontroller-based solution
+
+## 🔧 Hardware Attacker Setup
+
+### ESP8266 Real-time Attacker
+
+The hardware component uses an ESP8266 microcontroller to perform real-world attack simulations:
+
+#### Quick Setup:
+1. **Hardware Requirements**:
+   - ESP8266 (NodeMCU or Wemos D1 Mini)
+   - Blue LED + 220Ω resistor (attack blocked indicator)
+   - White LED + 220Ω resistor (attack success indicator)
+   - Breadboard and jumper wires
+
+2. **Software Setup**:
+   - Install Arduino IDE with ESP8266 board package
+   - Open `hardware/esp8266_attacker.ino`
+   - Configure WiFi credentials and IDPS server IP
+   - Upload to ESP8266
+
+3. **Circuit Connections**:
+   ```
+   ESP8266 D5 → [220Ω] → Blue LED → GND
+   ESP8266 D6 → [220Ω] → White LED → GND
+   ```
+
+4. **LED Indicators**:
+   - **Blue LED ON**: Attack blocked by IDPS (HTTP 403)
+   - **White LED ON**: Attack successful (HTTP 200)
+   - **Both LEDs ON**: Communication error
+
+For detailed setup instructions, circuit diagrams, and troubleshooting, see `hardware/README.md`.
 
 ## 🤖 Machine Learning Model
 
@@ -252,9 +302,25 @@ The system maintains several types of logs:
 
 To test the system:
 
-1. Start all three components (server, monitor, dashboard)
-2. Run the attack simulation: `python -m src.tools.attack_sim`
-3. Monitor the dashboard to see detections and blocks
+**Testing Method 1: Software UI (Recommended)**
+1. Run `python setup.py` and choose 'yes' to start all services
+2. Open the Attack Simulator UI: http://localhost:8502
+3. Choose from pre-configured attack scenarios
+4. Monitor the dashboard at http://localhost:8501 to see real-time detections and blocks
+5. Check the audit logs for detailed activity records
+
+**Testing Method 2: Hardware ESP8266**
+1. Run `python setup.py` and choose 'yes' to start all services
+2. Set up ESP8266 hardware attacker (see `hardware/README.md` for detailed setup)
+3. Configure ESP8266 with your WiFi and server IP address
+4. Upload and run the hardware attacker
+5. Monitor LED indicators on ESP8266 and dashboard for real-time attack detection
+6. Check audit logs for hardware-generated attack patterns
+
+**Testing Method 3: Command Line**
+1. Run `python setup.py` and choose 'yes' to start all services
+2. In a new terminal, run the attack simulation: `python -m src.tools.attack_sim`
+3. Monitor the dashboard at http://localhost:8501 to see detections and blocks
 4. Check the audit logs for detailed activity records
 
 ## 🤝 Contributing
@@ -287,9 +353,9 @@ which python  # Should point to idps_env/bin/python
 ### First Run Checklist
 1. ✅ Virtual environment created and activated
 2. ✅ Dependencies installed (`pip install -r requirements.txt`)
-3. ✅ System initialized (`python setup.py`)
-4. ✅ System started (`python idps_control.py start`)
-5. ✅ Tested with attack simulation (`python -m src.tools.attack_sim`)
+3. ✅ System setup and started (`python setup.py` → choose 'yes')
+4. ✅ Access all interfaces (Dashboard: http://localhost:8501, Simulator: http://localhost:8502)
+5. ✅ Tested with attack simulation using the web UI or command line
 
 ## 🆘 Troubleshooting
 
@@ -334,14 +400,17 @@ which python  # Should point to idps_env/bin/python
    ```
 
 ### Quick System Test
+
+**Complete System Test**
 ```bash
 # Complete system test sequence
 source idps_env/bin/activate
-python idps_control.py status    # Check system status
-python idps_control.py start     # Start all components
-# Wait 10 seconds for startup
-python -m src.tools.attack_sim   # Run attack simulation
-python idps_control.py stop      # Stop all components
+python setup.py                  # Setup and start all services (choose 'yes')
+# Wait for all services to start, then:
+# 1. Open http://localhost:8502 for attack simulator
+# 2. Open http://localhost:8501 for dashboard
+# 3. Test attacks and monitor results
+# 4. Press Ctrl+C to stop everything
 ```
 
 ## ⚠️ Disclaimer
