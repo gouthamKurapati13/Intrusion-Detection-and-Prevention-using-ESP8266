@@ -157,31 +157,6 @@ For real-world testing with physical hardware:
    - **White LED**: Attack successful
    - **Both LEDs**: Communication error
 
-**Method 3: Command Line Testing**
-
-**Command-Line Attack Simulation**
-```bash
-# Make sure virtual environment is activated
-source idps_env/bin/activate
-
-# Run basic brute force attack simulation
-python -m src.tools.attack_sim
-```
-
-**Advanced Command-Line Simulations**
-```bash
-# Brute force attack with custom parameters
-python -m src.tools.attack_sim --type brute_force --attempts 30 --delay 1
-
-# Credential stuffing attack
-python -m src.tools.attack_sim --type credential_stuffing
-
-# Slow stealth attack
-python -m src.tools.attack_sim --type slow --attempts 20
-
-# Mixed attack pattern
-python -m src.tools.attack_sim --type mixed
-```
 
 ### Model Management
 
