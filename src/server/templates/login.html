@@ -3,91 +3,437 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IDPS Test Login</title>
+    <title>IDPS Security Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-        }
-        .login-container {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            color: #555;
-            font-weight: bold;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 16px;
+        * {
+            margin: 0;
+            padding: 0;
             box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .background-animation::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255,255,255,0.05) 2px,
+                rgba(255,255,255,0.05) 4px
+            );
+            animation: move 20s linear infinite;
+        }
+
+        @keyframes move {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #667eea);
+            background-size: 200% 100%;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .security-badge {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            gap: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+        .input-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 1.1rem;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #e1e5e9;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+        }
+
         input[type="text"]:focus, input[type="password"]:focus {
             outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 5px rgba(0,123,255,0.3);
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            transform: translateY(-2px);
         }
+
+        input[type="text"]:focus + i, input[type="password"]:focus + i {
+            color: #667eea;
+        }
+
         .login-btn {
             width: 100%;
-            padding: 12px;
-            background-color: #007bff;
+            padding: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 12px;
             font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
+
         .login-btn:hover {
-            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
         }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
         .warning {
-            background-color: #fff3cd;
+            background: linear-gradient(135deg, #fff3cd, #fff8e1);
             border: 1px solid #ffeaa7;
+            border-left: 5px solid #ffc107;
             color: #856404;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 30px;
             text-align: center;
             font-size: 14px;
+            line-height: 1.5;
+            position: relative;
+        }
+
+        .warning::before {
+            content: '⚠️';
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .features {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .features h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #555;
+        }
+
+        .feature-item i {
+            color: #667eea;
+            width: 16px;
+        }
+
+        .status-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(76, 175, 80, 0.9);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .status-indicator::before {
+            content: '🟢';
+            margin-right: 5px;
+        }
+
+        @media (max-width: 480px) {
+            .login-container {
+                margin: 10px;
+                padding: 30px 25px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .feature-list {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading animation */
+        .login-btn.loading {
+            pointer-events: none;
+        }
+
+        .login-btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
+    <div class="background-animation"></div>
+    
+    <div class="status-indicator">
+        System Online
+    </div>
+
     <div class="login-container">
-        <h2>🔐 System Login</h2>
-        <form method="POST" action="/login">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username" required>
+        <div class="header">
+            <h1>🔐 IDPS Portal</h1>
+            <p class="subtitle">Intrusion Detection & Prevention System</p>
+            <div class="security-badge">
+                <i class="fas fa-shield-alt"></i>
+                Secure Access Point
             </div>
+        </div>
+
+        <form method="POST" action="/login" id="loginForm">
             <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <label for="username">
+                    <i class="fas fa-user"></i>
+                    Username
+                </label>
+                <div class="input-container">
+                    <input type="text" id="username" name="username" required 
+                           placeholder="Enter your username">
+                    <i class="fas fa-user"></i>
+                </div>
             </div>
-            <input type="submit" value="Login" class="login-btn">
+
+            <div class="form-group">
+                <label for="password">
+                    <i class="fas fa-lock"></i>
+                    Password
+                </label>
+                <div class="input-container">
+                    <input type="password" id="password" name="password" required 
+                           placeholder="Enter your password">
+                    <i class="fas fa-lock"></i>
+                </div>
+            </div>
+
+            <button type="submit" class="login-btn" id="loginBtn">
+                <i class="fas fa-sign-in-alt"></i>
+                Secure Login
+            </button>
         </form>
+
         <div class="warning">
-            ⚠️ This is a test system for intrusion detection. All login attempts are monitored and logged.
+            <strong>Security Notice</strong><br>
+            This is a monitored test system for intrusion detection research. 
+            All login attempts are logged and analyzed for security purposes.
+            Unauthorized access attempts will be reported.
+        </div>
+
+        <div class="features">
+            <h3><i class="fas fa-cogs"></i> System Features</h3>
+            <div class="feature-list">
+                <div class="feature-item">
+                    <i class="fas fa-eye"></i>
+                    Real-time Monitoring
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-brain"></i>
+                    AI Detection Engine
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-ban"></i>
+                    Auto IP Blocking
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    Threat Analytics
+                </div>
+            </div>
         </div>
     </div>
+
+    <script>
+        // Add loading animation on form submit
+        document.getElementById('loginForm').addEventListener('submit', function() {
+            const btn = document.getElementById('loginBtn');
+            btn.classList.add('loading');
+            btn.innerHTML = 'Authenticating...';
+        });
+
+        // Add some interactive effects
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        // Simulate typing effect for placeholder (optional enhancement)
+        function typeEffect(element, text, speed = 100) {
+            let i = 0;
+            element.placeholder = '';
+            const timer = setInterval(() => {
+                if (i < text.length) {
+                    element.placeholder += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(timer);
+                }
+            }, speed);
+        }
+
+        // Add subtle animations on load
+        window.addEventListener('load', function() {
+            document.querySelector('.login-container').style.opacity = '0';
+            document.querySelector('.login-container').style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                document.querySelector('.login-container').style.transition = 'all 0.6s ease';
+                document.querySelector('.login-container').style.opacity = '1';
+                document.querySelector('.login-container').style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
 </body>
 </html>

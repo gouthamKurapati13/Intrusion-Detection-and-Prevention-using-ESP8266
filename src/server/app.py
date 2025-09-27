@@ -22,11 +22,13 @@ def ensure_log_file():
             # Write header if needed (optional)
             pass
 
-@app.before_first_request
 def initialize():
     """Initialize the application"""
     ensure_log_file()
     logger.info("Flask server initialized")
+
+# Initialize the application at startup
+initialize()
 
 @app.route('/')
 def index():
